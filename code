@@ -1,0 +1,16 @@
+import telebot
+
+bot = telebot.TeleBot('1999895295:AAGnapbMhPX8qIJ1UDdX7nzkwoZt1CpHYbE')
+
+
+@bot.message_handler(commands=['start'])
+def start_command(message):
+    name = message.from_user.first_name
+    bot.send_message(message.chat.id, 'Hello, ' + name + '!')
+
+
+bot.polling()
+
+
+
+
