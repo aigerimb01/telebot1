@@ -1,16 +1,30 @@
 import telebot
+from telebot import types
+#from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 bot = telebot.TeleBot('1999895295:AAGnapbMhPX8qIJ1UDdX7nzkwoZt1CpHYbE')
 
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start'], content_types= ['text'])
 def start_command(message):
     name = message.from_user.first_name
-    bot.send_message(message.chat.id, 'Hello, ' + name + '!')
+    keyboard = types.InlineKeyboardMarkup()  # наша клавиатура
+    almaty = types.InlineKeyboardButton(text='Алматы', callback_data='almaty') # кнопка «Да»
+    keyboard.add(almaty)  # добавляем кнопку в клавиатуру
+    astana = types.InlineKeyboardButton(text='Астана', callback_data='astana')
+    keyboard.add(astana)
+    bot.send_message(message.chat.id, 'Добро пожаловать в наш чатбот Телеграм, ' + name + '! Из какого ты города?', reply_markup=keyboard)
+
+@bot.callback_query_handler(func=lambda call: True)
+def callback_worker(call):
+    if call.data == "almaty":
+        bot.send_message(call.message.chat.id, 'Информация по городу Алматы');
+    elif call.data == "astana":
+        bot.send_message(call.message.chat.id, 'Информация по городу Астана');
 
 
-bot.polling()
-
+if __name__ == '__main__':
+    bot.infinity_polling()
 
 
 
