@@ -2,7 +2,9 @@ import telebot
 from telebot import types
 #from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
-bot = telebot.TeleBot('1999895295:AAGnapbMhPX8qIJ1UDdX7nzkwoZt1CpHYbE')
+token = ''
+
+bot = telebot.TeleBot(token)
 
 
 @bot.message_handler(commands=['start'], content_types= ['text'])
